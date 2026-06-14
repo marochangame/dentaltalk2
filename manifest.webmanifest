@@ -1,7 +1,7 @@
 {
   "name": "デンタルトーク2",
   "short_name": "DTalk2",
-  "start_url": "./index.html?v=20260615-tabs-flat1",
+  "start_url": "./index.html?v=20260615-compact1",
   "display": "standalone",
   "background_color": "#f7fbfc",
   "theme_color": "#0f8fa8",
