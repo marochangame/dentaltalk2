@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>デンタルトーク</title>
+<title>デンタルトーク2</title>
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="デンタルトーク2">
+
 <style>
   :root{--main:#0f8fa8;--main2:#0f6f82;--bg:#f7fbfc;--text:#14212b;--danger:#d94848;--line:#dbe8ec;--muted:#6e858d;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -20,7 +26,7 @@
   .screen.compact{font-size:27px;line-height:1.16;}
   .screen.tiny{font-size:23px;line-height:1.13;}
   .placeholder{color:#91a3aa;font-weight:650;font-size:26px;}
-  .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .actions{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;}
   button{font-family:inherit;border:1px solid var(--line);border-radius:14px;padding:12px 8px;font-size:18px;font-weight:850;background:#fff;color:var(--text);box-shadow:none;}
   button:active{transform:scale(.985);opacity:.8;}
   .light{color:var(--main2);background:#fff;}
@@ -72,7 +78,7 @@
     </div>
   </section>
 
-  <section class="bottom">
+  
     <div class="tabbar" id="tabs"></div>
     <div class="info"><span class="cat-title" id="categoryTitle"></span><span class="hint">よく使う順・長押しで削除</span></div>
     <div class="grid" id="wordGrid"></div>
@@ -112,7 +118,7 @@ function save(){ localStorage.setItem('dt_words_v2', JSON.stringify(data)); loca
 function keyFor(cat, word){ return cat + '::' + word; }
 function renderTabs(){
   const tabs = document.getElementById('tabs'); tabs.innerHTML='';
-  Object.keys(data).forEach(cat=>{ const b=document.createElement('button'); b.className='tab'+(cat===currentCategory?' active':''); b.textContent=cat; b.onclick=()=>{currentCategory=cat; render();}; tabs.appendChild(b); });
+  Object.keys(data).forEach(cat=>{ const b=document.createElement('button'); b.className='tab'+(cat===currentCategory?' active':''); b.textContent=cat; b.onclick=()=>{currentCategory=cat; document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render();}; tabs.appendChild(b); });
   const add=document.createElement('button'); add.className='tab add-tab'; add.textContent='＋追加'; add.onclick=showAdd; tabs.appendChild(add);
   const sel=document.getElementById('newCategory'); sel.innerHTML=''; Object.keys(data).forEach(cat=>{const o=document.createElement('option'); o.value=cat; o.textContent=cat; sel.appendChild(o);}); sel.value=currentCategory;
 }
@@ -144,7 +150,7 @@ function deleteWord(word){
   data[currentCategory] = data[currentCategory].filter(w => w !== word);
   delete counts[keyFor(currentCategory,word)];
   save();
-  render();
+  document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render();
 }
 function renderScreen(){
   screen.classList.remove('compact','tiny');
@@ -162,7 +168,7 @@ function appendWord(word){
   if(textParts.length && isSentence(word) && !currentText().endsWith('\n')) textParts.push('\n');
   textParts.push(word);
   const k=keyFor(currentCategory,word); counts[k]=(counts[k]||0)+1;
-  save(); render();
+  save(); document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render();
 }
 function addSpace(){ textParts.push('　'); renderScreen(); }
 function clearText(){ textParts=[]; renderScreen(); }
@@ -170,9 +176,9 @@ function undoText(){ textParts.pop(); renderScreen(); }
 function showAdd(){ document.getElementById('addModal').classList.add('show'); document.getElementById('newCategory').value=currentCategory; setTimeout(()=>document.getElementById('newWord').focus(),80); }
 function hideAdd(){ document.getElementById('addModal').classList.remove('show'); }
 function closeAdd(e){ if(e.target.id==='addModal') hideAdd(); }
-function addWord(){ const input=document.getElementById('newWord'); const word=input.value.trim(); const cat=document.getElementById('newCategory').value; if(!word) return; if(!data[cat].includes(word)) data[cat].push(word); input.value=''; save(); currentCategory=cat; hideAdd(); render(); }
-function resetCounts(){ if(confirm('使用回数をリセットしますか？')){ counts={}; save(); render(); } }
-render();
+function addWord(){ const input=document.getElementById('newWord'); const word=input.value.trim(); const cat=document.getElementById('newCategory').value; if(!word) return; if(!data[cat].includes(word)) data[cat].push(word); input.value=''; save(); currentCategory=cat; hideAdd(); document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render(); }
+function resetCounts(){ if(confirm('使用回数をリセットしますか？')){ counts={}; save(); document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render(); } }
+document.getElementById("showBtn").onclick=()=>{const t=currentText().trim(); if(!t)return; document.getElementById("showText").textContent=t; const m=document.getElementById("showMode"); m.style.display="flex";}; document.getElementById("showMode").onclick=()=>document.getElementById("showMode").style.display="none"; render();
 </script>
 </body>
 </html>
