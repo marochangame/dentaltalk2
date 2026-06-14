@@ -1,19 +1,19 @@
 {
   "name": "デンタルトーク2",
   "short_name": "DTalk2",
-  "start_url": "./index.html?v=20260614-safe1",
+  "start_url": "./index.html?v=20260615-tabs-flat1",
   "display": "standalone",
   "background_color": "#f7fbfc",
   "theme_color": "#0f8fa8",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
